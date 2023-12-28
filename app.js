@@ -20,8 +20,9 @@ mongoose.connect(config.DB_URL, {
 mongoose.connection.on('connected', () => console.log('정상적으로 MongoDB에 연결되었습니다.'));
 
 const corsOptions = {
-  origin: 'http://localhost:3000',
-  optionSucessStatus: 200,
+  // origin: 'http://localhost:3000',
+  origin: 'https://review-it-tawny.vercel.app',
+  optionsSucessStatus: 200,
   credentials: true
 };
 

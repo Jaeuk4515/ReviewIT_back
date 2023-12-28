@@ -38,9 +38,13 @@ class UserService {
     if (!isPasswordCorrect) return '비밀번호가 일치하지 않습니다.'
 
     // 로그인 성공 -> jwt 토큰 생성
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET_KEY);
-
-    return token;
+    try {
+      const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET_KEY);
+      return token;
+    } catch (error) {
+      console.error('토큰 생성 오류:', error);
+      return '토큰 생성에 실패했습니다.'
+    };
   };
 
   async findUserThumbnail(userId) {

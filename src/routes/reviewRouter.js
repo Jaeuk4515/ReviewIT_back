@@ -37,6 +37,7 @@ reviewRouter.post('/create', upload.array('productImages', 4), async (req, res, 
     req.files.map(img => {
       reviewInfo.productImages.push(img.location);
     });
+    // reviewInfo.productImages = ['a', 'b', 'c', 'd'];
 
     const createdInfo = await reviewService.uploadReview(reviewInfo);
     res.header('Access-Control-Allow-Origin', 'http://localhost:3000');

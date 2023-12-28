@@ -48,10 +48,13 @@ userRouter.post('/login', async (req, res, next) => {
   try {
     console.log(req.body);
     const result = await userService.getUserToken(req.body);
-    if (result === '가입되지 않은 회원입니다.' || result === '비밀번호가 일치하지 않습니다.') {
+    if (result === '가입되지 않은 회원입니다.' || result === '비밀번호가 일치하지 않습니다.' || result === '토큰 생성에 실패했습니다.') {
       res.status(200).json({ message: result });
     } else {
-      res.cookie('token', result);
+      res.cookie('token', result, {
+        sameSite: 'None',
+        secure: true
+      });
       res.status(200).json({ message: 'success' });
     }
   } catch (error) {
@@ -71,6 +74,7 @@ userRouter.get('/logout', (req, res, next) => {
 // 현재 접속중인 계정의 유저 정보 조회
 userRouter.get('/my', loginRequired, async (req, res, next) => {
   try {
+    console.log('/my:', req.body);
     const user = await userService.findUserById(req.currentUserId);
     res.json(user);
   } catch (error) {
